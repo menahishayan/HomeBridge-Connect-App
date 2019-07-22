@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, ScrollView, AsyncStorage, StyleSheet, Text, View, RefreshControl } from 'react-native';
+import { TouchableOpacity, ScrollView, Alert, AsyncStorage, StyleSheet, Text, View, RefreshControl } from 'react-native';
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
@@ -70,11 +70,12 @@ export default class HomeScreen extends React.Component {
 			this.setState({accessories: accessories})
 			// console.log(this.state.accessories[2].name)
 
-		}).catch(e => {
-			console.log(e);
-			Alert.alert("Error", "Could not get HomeBridge data");
-			// if(e) AsyncStorage.clear();
-		});
+		})
+		// .catch(e => {
+		// 	console.log(e);
+		// 	Alert.alert("Error", "Could not get HomeBridge data");
+		// 	// if(e) AsyncStorage.clear();
+		// });
 		this.setState({refreshing: false});
     }
 
