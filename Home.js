@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, ScrollView, Alert, AsyncStorage, StyleSheet, Text, View, RefreshControl } from 'react-native';
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
-import { Icon } from 'react-native-elements';
+import { Icon, Button } from 'react-native-elements';
 
 import { ColorUIProp } from './ColorUI';
 import { colorUIPropStyles } from './colorUIStyles';
@@ -17,11 +17,16 @@ export default class HomeScreen extends React.Component {
 			refreshing: false
 		}
 		this.loadItems(props.navigation);
-
+		const navigation = props.navigation;
 	}
 
 	static navigationOptions = ({navigation}) => ({
 		title: 'HomeBridge',
+		headerRight: (
+			<TouchableOpacity onPress={() => navigation.push('Settings')}>
+				<Icon name="settings" color="black" containerStyle={{marginRight: 15}}/>
+			</TouchableOpacity>
+		)
 	});
 
 	loadItems = async(navigation) => {
@@ -35,18 +40,18 @@ export default class HomeScreen extends React.Component {
             navigation.navigate('Init');
         } else {
             await this.setState({url: urlLoad, port: portLoad, auth: authLoad});
-			this.getAccessories();
+			this.getAccessories.bind(this);
         }
     }
 
 	refreshHandler() {
-		// setTimeout(this.getAccessories(), this.state.url?5:700);
+		// this.setState({refreshing: true});
+		setTimeout(this.getAccessories.bind(this), this.state.url!==''?5:700);
+		// this.setState({refreshing: false});
 	}
 
     getAccessories() {
-		this.setState({refreshing: true});
 		let accURL = this.state.url + ':' + this.state.port + '/accessories';
-		// console.log(accURL)
 		fetch(accURL, {
 	        method: 'GET',
 	        headers: {
@@ -59,24 +64,26 @@ export default class HomeScreen extends React.Component {
 			let accessories =[];
 			responseJSON.accessories.forEach(i => {
 				accessories.push({
-				name: i.services[1].characteristics[0].value || i.services[0].characteristics[2].value,
-				aid: i.aid,
-				iid: i.services[1].characteristics[1].iid,
-				type: i.services[0].characteristics[2].value,
-				value: i.services[1].characteristics[1].value,
-			});
-		})
-
+					name: i.services[1].characteristics[0].value || i.services[0].characteristics[2].value,
+					aid: i.aid,
+					iid: i.services[1].characteristics[1].iid,
+					type: i.services[0].characteristics[2].value,
+					value: i.services[1].characteristics[1].value,
+				});
+			})
 			this.setState({accessories: accessories})
-			// console.log(this.state.accessories[2].name)
-
 		})
-		// .catch(e => {
-		// 	console.log(e);
-		// 	Alert.alert("Error", "Could not get HomeBridge data");
-		// 	// if(e) AsyncStorage.clear();
-		// });
-		this.setState({refreshing: false});
+		.catch(e => {
+			console.log(e);
+			Alert.alert("Error", "Could not get HomeBridge data",
+			[{text: 'Reload', onPress: () => this.getAccessories()},
+		    {text: 'Settings', onPress: () => {this.props.navigation.push('Settings')}},
+		  ],
+		  {cancelable: false},
+		  );
+			// if(e) AsyncStorage.clear();
+		});
+
     }
 
 	toggleAccessory(accessory) {
@@ -128,7 +135,7 @@ export default class HomeScreen extends React.Component {
 						}}>
 
 	                  <ColorUIProp enforce color={accessory.value ? "Purple" : "Grey"} containerStyle={{marginTop: 10, height:125, width: '90%', borderRadius:10, marginLeft: '-1%', marginRight: '-1%'}} wrapperStyle={{padding:5, justifyContent:'center', paddingTop: 5}} borderRadius={10}>
-	                         <View style={{width:'100%', alignItems:'left', justifyContent:'center'}}>
+	                         <View style={{width:'100%', alignItems:'flex-start', justifyContent:'center'}}>
 							 		<Icon name={accessory.type == "Lightbulb" ? "lightbulb" : (accessory.type == "Fan" ? "fan" : "cube-outline")} type="material-community" color="white" />
 	                              <Text style={[colorUIPropStyles.itemHead, {fontSize:22, marginTop:22, textAlign: 'center'}]}>{accessory.name}</Text>
 	                              <Text style={{fontSize:12, color:'white', marginTop:0}}>{accessory.type}</Text>
@@ -137,12 +144,6 @@ export default class HomeScreen extends React.Component {
 	                     </TouchableOpacity>
 					))
 				}
-				<View style={{width: '100%', marginTop: '20%', alignItems: 'center'}}>
-				<Text style={{color:'blue', fontSize: 14, fontWeight: '600'}}>Settings</Text>
-				</View>
-				<View style={{width: '100%', marginTop: '10%', alignItems: 'center'}}>
-				<Text style={{fontSize: 11, color:'grey', textAlign: 'center'}}>HomeBridge Connect v1.0{'\n'}Created by Menahi Shayan. 2019.</Text>
-				</View>
             </ScrollView>
         );
     }

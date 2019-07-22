@@ -1,8 +1,10 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Text, View } from 'react-native';
+import { Image, AsyncStorage, StyleSheet, Text, View } from 'react-native';
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
 import HomeScreen from './Home.js'
+import SettingsScreen from './Settings.js'
+import HelpScreen from './Help.js'
 import InitScreen from './Init.js'
 
 export class InitLoadingScreen extends React.Component {
@@ -10,6 +12,10 @@ export class InitLoadingScreen extends React.Component {
         super(props);
         this.loadItems(props.navigation);
     }
+
+    static navigationOptions = ({navigation}) => ({
+		backgroundColor:'white'
+	});
 
     loadItems = async(navigation) => {
         let urlLoad = await AsyncStorage.getItem('homeBridgeURL');
@@ -27,15 +33,15 @@ export class InitLoadingScreen extends React.Component {
 
     render() {
         return(
-            <View style={{height:'100%', width:'100%', alignItems: 'center', justifyContent:'center'}}>
-                <Text>HomeBridge Connect</Text>
+            <View style={{height:'100%', width:'100%', alignItems: 'center', justifyContent:'center', backgroundColor: 'white'}}>
+                <Image source={require('./img/logo.png')} resizeMode="contain" style={{width: '60%'}}/>
             </View>
         );
     }
 }
 
-const AppStack = createStackNavigator({ Home: HomeScreen });
-const InitStack = createStackNavigator({ Init: InitScreen });
+const AppStack = createStackNavigator({ Home: HomeScreen, Settings: SettingsScreen, Help: HelpScreen});
+const InitStack = createStackNavigator({ Main: InitScreen, Help: HelpScreen });
 
 export default createAppContainer(createSwitchNavigator(
   {
@@ -47,12 +53,3 @@ export default createAppContainer(createSwitchNavigator(
     initialRouteName: 'InitLoading',
   }
 ));
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

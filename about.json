@@ -1,0 +1,55 @@
+{
+	"aboutMain": {
+		"title": "What is HomeBridge?",
+		"value": ["HomeKit support for the impatient!", "Homebridge is a lightweight NodeJS server you can run on your home network that emulates the iOS HomeKit API.", "It supports Plugins, which are community - contributed modules that provide a basic bridge from HomeKit to various 3rd - party APIs provided by manufacturers of \"smart home\" devices."],
+		"links": [{
+				"title": "HomeBridge",
+				"value": "http://homebridge.io"
+			},
+			{
+				"title": "GitHub",
+				"value": "https://github.com/nfarina/homebridge"
+			}
+		]
+	},
+	"aboutApp": {
+		"title": "What is HomeBridge Connect?",
+		"value": [
+			"The Android app for HomeBridge!",
+			"HomeKit is iOS exclusive, the underlying technology however, is not. Not everyone in your home might use an iPhone, so this is an attempt to overcome that problem. HomeBridge Connect lets you control your HomeBridge from an Android device.",
+			"HomeBridge Connect is still in its early stages and currently only supports ON/OFF toggles, but you 're more than welcome to contribute to the GitHub."
+		],
+		"links": [{
+			"title": "GitHub",
+			"value": "https://github.com/menahishayan/HomeBridge-Connect-App"
+		}]
+	},
+	"setup": {
+		"title": "Setup",
+		"value": [
+			"For this app to work, the first thing you'll need a working HomeBridge setup (obviously)",
+			"Then, make sure you're on the same network, and figure out the IP, port, and authorization pin of your HomeBridge. To avoid IP changes, you should consider assigning a static IP to your HomeBridge.",
+			"The app requires HomeBridge to be run in insecure mode. Refer the full setup guide for more details."
+		],
+		"links": [{
+			"title": "Full Setup Guide",
+			"value": "https://github.com/menahishayan/HomeBridge-Connect-App/blob/master/README.md"
+		}]
+	},
+	"help": {
+		"title": "Troubleshooting",
+		"value": ["If you've followed the setup docs correctly and still can't get the app to work, you can open an issue on the GitHub and seek further assistance there."],
+		"links": [{
+			"title": "GitHub",
+			"value": "https://github.com/menahishayan/HomeBridge-Connect-App"
+		}]
+	},
+	"contribute": {
+		"title": "Contributing",
+		"value": ["If you'd like to contribute to the code, feel free to create a PR on the GitHub"],
+		"links": [{
+			"title": "GitHub",
+			"value": "https://github.com/menahishayan/HomeBridge-Connect-App"
+		}]
+	}
+}

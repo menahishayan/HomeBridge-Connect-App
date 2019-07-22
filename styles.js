@@ -89,6 +89,16 @@ export const globalStyles = StyleSheet.create({
       fontSize: 16,
       backgroundColor: '#eee',
     },
+    textinput: {
+        fontSize: 16,
+        marginBottom: '2%'
+    },
+    textinputheader: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginBottom: -15
+
+    },
     button:{
         margin:5,
         marginTop:10,
@@ -99,6 +109,8 @@ export const globalStyles = StyleSheet.create({
         shadowOffset:{  width: 0,  height: 2,  },
         shadowColor: 'black',
         shadowOpacity: 0.2,
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor:'#007AFF'
     }
 });
