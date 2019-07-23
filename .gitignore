@@ -9,3 +9,8 @@ npm-debug.*
 web-build/
 web-report/
 .DS_Store
+android/app/build/
+ios/build/
+android/.gradle/*
+
+
